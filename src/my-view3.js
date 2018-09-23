@@ -20,14 +20,42 @@ class MyView3 extends PolymerElement {
 
           padding: 10px;
         }
+		#Container{
+			margin: 0px auto;
+			width: 375px;
+			height: 375px;
+			border: 10px #333 solid;
+		}
+		#videoElement{
+			
+			width: 375px;
+			height: 375px;
+			background-color: #666;
+		}
       </style>
-
+	  <div id="Container">
+	  <video autoplay="true" id="videoElement"></video>
+	  </div>
       <div class="card">
         <div class="circle">3</div>
-        <h1>View Three</h1>
-        <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-        <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
-      </div>
+        <h1>Camera View</h1>
+		<p>Relative's Name</p>
+		<p>Relation to User</p>
+		<p>Relative's Interests</p>
+	  </div>
+	  <script>
+		var video = document.querySelector("#videoElement");
+ 
+		if (navigator.mediaDevices.getUserMedia) {       
+			navigator.mediaDevices.getUserMedia({video: true})
+		  .then(function(stream) {
+			video.srcObject = stream;
+		  })
+		  .catch(function(err0r) {
+			console.log("Something went wrong!");
+		  });
+		} 
+	  </script>
     `;
   }
 }
