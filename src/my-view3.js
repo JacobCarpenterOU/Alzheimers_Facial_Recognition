@@ -13,7 +13,7 @@ import './shared-styles.js';
 
 class MyView3 extends PolymerElement {
   static get template() {
-    return html`
+      return html`
       <style include="shared-styles">
         :host {
           display: block;
@@ -37,13 +37,33 @@ class MyView3 extends PolymerElement {
 	  <video autoplay="true" id="videoElement"></video>
 	  </div>
       <div class="card">
-        <div class="circle">3</div>
+        
         <h1>Camera View</h1>
-		<p>Relative's Name</p>
-		<p>Relation to User</p>
-		<p>Relative's Interests</p>
+		<p>Relatives Name : </p>
+		<p>Relation to User : </p>
+		<p>Relatives Interests : </p>
 	  </div>
-	  <script>
+	  
+	  
+      <script type="text/javascript">
+		//script for Text To Speech
+	    var RName = "Roger";
+		var Rel = "Uncle";
+		var Interests = "College Football";
+        var u = new SpeechSynthesisUtterance();
+        var v = new SpeechSynthesisUtterance();
+        var w = new SpeechSynthesisUtterance();
+        u.text = 'Relatives Name. ' + RName;
+        v.text = 'Relation. ' + Rel;
+        w.text = 'Interests. ' + Interests;
+        
+        speechSynthesis.speak(u);
+        speechSynthesis.speak(v);
+        speechSynthesis.speak(w);
+      </script>
+	  
+	  <script type="text/javascript">
+		//script for Camera
 		var video = document.querySelector("#videoElement");
  
 		if (navigator.mediaDevices.getUserMedia) {       
