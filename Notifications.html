@@ -1,0 +1,522 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Friendly Flashback</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css"> -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.light_blue-orange.min.css" />
+    <link rel="stylesheet" href="/src/css/app.css">
+    <link rel="stylesheet" href="/src/css/feed.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Friendly Flashback">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-57x57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-60x60.png" sizes="60x60">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-180x180.png" sizes="180x180">
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.4/firebase.js"></script>
+    <script type="text/javascript" src="https://script.google.com/macros/s/AKfycbw8_C6CwSUIVcxB7vmTojBn3ZNwv5lmHl7OfmwDdNwuVPvKauQa/exec"></script>
+
+    <meta name="msapplication-TileImage" content="/src/images/icons/app-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#fff">
+    <meta name="theme-color" content="#3f51b5">
+    <!--style below found at: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_calendar -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+        body {
+            font-family: Verdana, sans-serif;
+        }
+        .month {
+            padding: 70px 25px;
+            width: 100%;
+            background: #1abc9c;
+            text-align: center;
+        }
+            .month ul {
+                margin: 0;
+                padding: 0;
+            }
+                .month ul li {
+                    color: white;
+                    font-size: 20px;
+                    text-transform: uppercase;
+                    letter-spacing: 3px;
+                }
+            .month .prev {
+                float: left;
+                padding-top: 10px;
+            }
+            .month .next {
+                float: right;
+                padding-top: 10px;
+            }
+        .weekdays {
+            margin: 0;
+            padding: 10px 0;
+            background-color: #ddd;
+        }
+            .weekdays li {
+                display: inline-block;
+                width: 13.6%;
+                color: #666;
+                text-align: center;
+            }
+        .days {
+            padding: 10px 0;
+            background: #eee;
+            margin: 0;
+        }
+            .days li {
+                list-style-type: none;
+                display: inline-block;
+                width: 13.6%;
+                text-align: center;
+                margin-bottom: 5px;
+                font-size: 12px;
+                color: #777;
+                border: 0;
+                box-shadow: none;
+                border-radius: 0px;
+            }
+                .days li .inactive {
+                    padding: 5px;
+                    border: 0;
+                    box-shadow: none;
+                    background: none;
+                    border-radius: 0px;
+                }
+
+                .days li .active {
+                    padding: 5px;
+                    border: 0;
+                    box-shadow: none;
+                    border-radius: 0px;
+                    background: #1abc9c;
+                    color: white !important;
+                }
+                .days li .reminder {
+                    padding: 5px;
+                    background: #ddd;
+                    color: black !important; 
+                    border: 0;
+                    box-shadow: none;
+                    border-radius: 0px;
+                }
+
+        /* Add media queries for smaller screens */
+        @media screen and (max-width:720px) {
+            .weekdays li, .days li {
+                width: 13.1%;
+            }
+        }
+        @media screen and (max-width: 420px) {
+            .weekdays li, .days li {
+                width: 12.5%;
+            }
+                .days li .active {
+                    padding: 2px;
+                }
+        }
+        @media screen and (max-width: 290px) {
+            .weekdays li, .days li {
+                width: 12.2%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <!-- Title -->
+                    <span class="mdl-layout-title">Friendly Flashback</span>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation. We hide it in small screens. -->
+                    <nav class="mdl-navigation mdl-layout--large-screen-only">
+                        <a class="mdl-navigation__link" href="/">Contacts</a>
+                        <a class="mdl-navigation__link" href="/addContact">Add Contact</a>
+                        <a class="mdl-navigation__link" href="/camera/">Camera</a>
+                        <a onclick="mainApp.logOut()" class="mdl-navigation__link">Logout</a>
+
+                        <!-- <div class="drawer-option">
+                            <button class="enable-notifications mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--accent">
+                                Camera
+                            </button>
+                        </div> -->
+                    </nav>
+                </div>
+            </header>
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Friendly Flashback</span>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="/">Contacts</a>
+                    <a class="mdl-navigation__link" href="/addContact">Add Contact</a>
+                    <a class="mdl-navigation__link" href="/camera/">Camera</a>
+					<a class="mdl-navigation__link" href="/Notifications">Notifications</a>
+                    <a onclick="mainApp.logOut()" class="mdl-navigation__link">Logout</a>
+
+                    <!-- <div class="drawer-option">
+                        <button class="enable-notifications mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--accent">
+                            Camera
+                        </button>
+                    </div> -->
+                </nav>
+            </div>
+
+
+            <!-- Slide over camera====================================================================================================       -->
+
+            <main class="mdl-layout__content mat-typography">
+                <div id="create-post">
+                    <video id="player" autoplay=true></video>
+                    <canvas id="canvasOutput" width="320px" height="240px"></canvas>
+
+
+
+
+
+
+
+                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" id="toggle-camera">
+                        <input type="checkbox" id="switch-1" class="mdl-switch__input" checked>
+                        <span class="mdl-switch__label">Toggle Screen</span>
+                    </label>
+
+
+
+
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="stopAndStop">
+                        Display The camera
+                    </button>
+
+                    <h6>This is {Name} your {relation}</h6>
+
+                    <h4>{Reminder phrase...........}</h4>
+
+                    <!--                     <div id="pick-image">
+                <h6>Pick an Image instead</h6>
+                <input type="file" accept="image/*" id="image-picker">
+            </div>
+
+
+
+
+            <form>
+                <div class="input-section mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="title">
+                    <label class="mdl-textfield__label" for="title" name="title">Title</label>
+                </div>
+                <div class="input-section mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="manual-location">
+                    <input class="mdl-textfield__input" type="text" id="location">
+                    <label class="mdl-textfield__label" for="location" name="location">Location</label>
+                </div>
+                <div class="input-section">
+                    <button class="mdl-button mdl-js-button mdl-button mdl-button--colored" type="button" id="location-btn">Get
+                        Location
+                    </button>
+                    <div class="mdl-spinner mdl-js-spinner is-active" id="location-loader"></div>
+                </div>
+                <br>
+                <div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--accent"
+                        type="submit" id="post-btn">Post!
+                    </button>
+                </div>
+                <br>
+                <div>
+                    <button class="mdl-button mdl-js-button mdl-button--fab" id="close-create-post-modal-btn"
+                        type="button">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+            </form> -->
+
+                    <button class="mdl-button mdl-js-button mdl-button--fab" id="close-create-post-modal-btn" type="button">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+                <!-- <img src="/src/images/main-image.jpg" srcset="/src/images/main-image-lg.jpg 1200w,
+                 /src/images/main-image.jpg 900w,
+                 /src/images/main-image-sm.jpg 480w"
+        alt="Explore the City" class="main-image"> -->
+                <!-- <img src="/src/images/mountain-croped.jpg" srcset="/src/images/mountain-croped.jpg 1200w,
+          /src/images/mountain-croped.jpg 900w,
+          /src/images/mountain-croped.jpg 480w"
+                     alt="Explore the City" class="main-image"> -->
+
+                <div class="page-content" ">
+                    <h5 class="text-center mdl-color-text--primary">Notifications and Reminders for <span id="displayName"></span></h5>
+
+
+
+                    <div class="mdl-grid">
+                        <!-- <div class="mdl-layout-spacer"></div> -->
+                        <button class="mdl-button mdl-js-button mdl-button--accent" onclick="newMed()">
+                            Add Medication Notification
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--accent" onclick="newRemind()">
+                            Add Reminder date
+                        </button>                        
+                        
+                    </div>
+                    <form id="reminder" hidden>
+                        <div>
+                            <label>Enter Reminder Name:</label>
+                            <input type="text" id="RemName">
+                        </div>
+                        <div>
+                            <label>Enter Reminder Date and Time:</label>
+                            <input type="date" id="RemDate"><br>
+                            <input type="time" id="RemTime">
+
+                        </div>
+                        <button id="btnDateSubmit" onclick="closeRemForm()">Submit Reminder</button>
+                    </form>
+
+                    <form id="med" hidden>
+                        <div>
+                            <label>Enter Medication Name:</label>
+                            <input type="text" id="MedName">
+
+                        </div>
+                        <div>
+                            <label>Check the day(s) to take:</label><br />
+                            <input type="checkbox" id="Monday" value="true">Monday<br>
+                            <input type="checkbox" id="Tuesday" value="true">Tuesday<br>
+                            <input type="checkbox" id="Wednesday" value="true">Wednesday<br>
+                            <input type="checkbox" id="Thursday" value="true">Thursday<br>
+                            <input type="checkbox" id="Friday" value="true">Friday<br>
+                            <input type="checkbox" id="Saturday" value="true">Saturday<br>
+                            <input type="checkbox" id="Sunday" value="true">Sunday<br>
+                        </div>
+                        <div>
+                            <label>Enter time to take:</label>
+                            <input type="time" id="MedTime">
+                        </div>
+                        <button id="btnMedSubmit" onclick="closeMedForm()">Submit Medication</button>
+                    </form>
+                    <div id="testing">
+                        <p id="remd"></p>
+                        <p id="remt"></p>
+                        <p id="remn"></p>
+                    </div>      
+
+                    
+                    <script>
+                        function newRemind() {                            
+                            reminder.hidden = false;
+                            med.hidden = true;
+
+                        }
+                        function newMed() {
+                            reminder.hidden = true;
+                            med.hidden = false;
+                        }
+                        function closeRemForm() {
+                            var newRemDate = new Date(document.getElementById("RemDate").value);
+                            var newRemName = document.getElementById("RemName").value;
+                            var newRemTime = document.getElementById("RemTime").value;
+                            reminder.hidden = true;
+                            document.getElementById("RemDate").value = "";
+                            document.getElementById("RemName").value = "";
+                            document.getElementById("RemTime").value = "";
+                            //document.getElementById("remd").innerHTML = "";
+                            //document.getElementById("remt").innerHTML = newRemTime;
+                            //document.getElementById("remn").innerHTML = newRemName;
+                            updateCalendar(newRemDate);
+                        }
+                        function closeMedForm() {
+                            var newMedName = document.getElementById("MedName").value;
+                            var newMedTime = document.getElementById("MedTime").value;
+                            document.getElementById("MedName").value = "";
+                            document.getElementById("MedTime").value = "";
+                            med.hidden = true;
+                        }
+                        function updateCalendar(du) {
+                            var trudate = new Date(du);
+                            var dateVal = trudate.getDate();
+                            if (dateVal == 31) { dateVal = 1; }
+                            else { dateVal = dateVal + 1; }
+                            var remDate = day[dateVal];
+                           // document.getElementById("remd").innerHTML = remDate;
+                            document.getElementById(remDate).className = "reminder";
+                            document.getElementById(dayNum).className = "active";
+                        }
+                    </script>
+
+                    <!-- <div class="mdl-layout-spacer"></div> -->
+                </div>
+                <div class="month">
+                    <script>var d = new Date();
+                        var month = new Array();
+                        month[0] = "January";
+                        month[1] = "February";
+                        month[2] = "March";
+                        month[3] = "April";
+                        month[4] = "May";
+                        month[5] = "June";
+                        month[6] = "July";
+                        month[7] = "August";
+                        month[8] = "September";
+                        month[9] = "October";
+                        month[10] = "November";
+                        month[11] = "December";
+                        var n = month[d.getMonth()];
+						var day = new Array();
+						
+						day[1] = "day1";
+						day[2] = "day2";
+						day[3] = "day3";
+						day[4] = "day4";
+						day[5] = "day5";
+						day[6] = "day6";
+						day[7] = "day7";
+						day[8] = "day8";
+						day[9] = "day9";
+						day[10] = "day10";
+						day[11] = "day11";
+						day[12] = "day12";
+						day[13] = "day13";
+						day[14] = "day14";
+						day[15] = "day15";
+						day[16] = "day16";
+						day[17] = "day17";
+						day[18] = "day18";
+						day[19] = "day19";
+						day[20] = "day20";
+						day[21] = "day21";
+						day[22] = "day22";
+						day[23] = "day23";
+						day[24] = "day24";
+						day[25] = "day25";
+						day[26] = "day26";
+						day[27] = "day27";
+						day[28] = "day28";
+						day[29] = "day29";
+						day[30] = "day30";
+						day[31] = "day31";
+
+						var dayNum = day[d.getDate()];
+                    </script>
+                    <ul>
+                        <li class="prev">&#10094;</li>
+                        <li class="next">&#10095;</li>
+                        <li id="dMonth">
+                                <script>document.getElementById("dMonth").innerHTML = n</script><br />
+                            <span style="font-size:18px" id="dYear"><script> document.getElementById("dYear").innerHTML = d.getFullYear();
+                            </script></span>
+                        </li>
+                    </ul>
+
+                </div>
+				
+                <ul class="weekdays">
+                    <li>Mon</li>
+                    <li>Tues</li>
+                    <li>Wed</li>
+                    <li>Thurs</li>
+                    <li>Fri</li>
+                    <li>Sat</li>
+                    <li>Sun</li>
+                </ul>
+                <ul class="days">
+                    <li><button  class="inactive"></button></li>
+                    <li><button  class="inactive"></button></li>
+                    <li><button  class="inactive"></button></li>                                                                            
+                    <li><button id="day1" class="inactive">1</button></li>
+                    <li><button id="day2" class="inactive">2</button></li>
+                    <li><button id="day3" class="inactive">3</button></li>
+                    <li><button id="day4" class="inactive">4</button></li>
+                    <li><button id="day5" class="inactive">5</button></li>
+                    <li><button id="day6" class="inactive">6</button></li>
+                    <li><button id="day7" class="inactive">7</button></li>
+                    <li><button id="day8" class="inactive">8</button></li>
+                    <li><button id="day9" class="reminder">9</button></li>
+                    <li><button id="day10" class="inactive">10</button></li>
+                    <li><button id="day11" class="inactive">11</button></li>
+                    <li><button id="day12" class="inactive">12</button></li>
+                    <li><button id="day13" class="inactive">13</button></li>
+                    <li><button id="day14" class="inactive">14</button></li>
+                    <li><button id="day15" class="inactive">15</button></li>
+                    <li><button id="day16" class="inactive">16</button></li>
+                    <li><button id="day17" class="inactive">17</button></li>
+                    <li><button id="day18" class="inactive">18</button></li>
+                    <li><button id="day19" class="inactive">19</button></li>
+                    <li><button id="day20" class="inactive">20</button></li>
+                    <li><button id="day21" class="inactive">21</button></li>
+                    <li><button id="day22" class="inactive">22</button></li>
+                    <li><button id="day23" class="inactive">23</button></li>
+                    <li><button id="day24" class="inactive">24</button></li>
+                    <li><button id="day25" class="inactive">25</button></li>
+                    <li><button id="day26" class="inactive">26</button></li>
+                    <li><button id="day27" class="inactive">27</button></li>
+                    <li><button id="day28" class="inactive">28</button></li>
+                    <li><button id="day29" class="inactive">29</button></li>
+                    <li><button id="day30" class="inactive">30</button></li>
+                    <li><button id="day31" class="inactive" ></button></li>
+                </ul>
+
+
+                <script> document.getElementById(dayNum).className = "active";</script>
+                <div class="" >
+                    <span style="font-size: 18px">Today's Reminders : </span>
+					<ul id="note-list" class="demo-list-icon mdl-list"></ul>
+                </div>
+                <script>document.getElementById("note1").innerHTML=""</script>
+                
+        </main>
+        </div>
+        <div class="floating-button">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="share-image-button">
+                <i class="material-icons">camera_alt</i>
+            </button>
+        </div>
+        <div id="confirmation-toast" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button type="button" class="mdl-snackbar__action"></button>
+        </div>
+        
+
+        <!--End Slide over camera====================================================================================================       -->
+
+
+    </div>
+    
+
+    <script src="/fireBase.js"></script>
+    <script src="/index.js"></script>
+
+    <script async src="/src/js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+    <script defer src="/src/js/material.min.js"></script>
+    <script src="/src/js/promise.js"></script>
+    <script src="/src/js/fetch.js"></script>
+    <script src="/src/js/idb.js"></script>
+    <script src="/src/js/utility.js"></script>
+    <script src="/src/js/app.js"></script>
+    <script src="/src/js/feed.js"></script>
+    <script src="/src/js/TTS.js"></script>
+</body>
+
+</html>
