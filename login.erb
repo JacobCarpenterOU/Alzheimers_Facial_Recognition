@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript" src="/jquery-3.3.1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="lib-css/fonts.css">
+    <link rel="stylesheet" href="lib-css/material-icons.css">
+    <link rel="stylesheet" href="lib-css/material.light_blue-orange.min.css" />
+    <link rel="stylesheet" href="src/css/app.css">
+
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Friendly Flashback">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-57x57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-60x60.png" sizes="60x60">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-76x76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="src/images/icons/apple-icon-180x180.png" sizes="180x180">
+
+    <meta name="msapplication-TileImage" content="/src/images/icons/app-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#fff">
+    <meta name="theme-color" content="#3f51b5">
+    <title>Login to Friendly Flashback</title>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-firestore.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+</head>
+
+<body>
+    <div class="loader">
+        <div class="inner"></div>
+    </div>
+    <style>
+        .loader {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(255,255,255);
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+        }
+
+        .loader .inner {
+            width: 100%;
+            height: 100%;
+            background: url(./loader.gif) center center no-repeat;
+        }
+    </style>
+    <script>
+        $(window).on("load", function () {
+            $(".loader .inner").fadeOut(750, function () {
+                $(".loader").fadeOut(1000);
+            });
+        })
+    </script>
+
+    <h1>Welcome to Friendly Flashback</h1>
+    <div id="firebaseui-auth-container"></div>
+    <div id="loader">Loading...</div>
+
+    <script src="fireBase.js"></script>
+    <script src="login.js"></script>
+</body>
+
+</html>
