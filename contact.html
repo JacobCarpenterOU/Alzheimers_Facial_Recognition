@@ -1,61 +1,170 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Contact</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.light_blue-orange.min.css" />
-    <link rel="stylesheet" href="/src/css/app.css">
-    <link rel="stylesheet" href="/src/css/feed.css">
+    <script type="text/javascript" src="./jquery-3.3.1.min.js"></script>
+    <script>$(function () { $("head").load("./head/all_headers.html") });</script>
+    <title>Friendly Flashback</title>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-firestore.js"></script>
 </head>
 
 <body>
-    <h1>This is the contact page</h1>
-
-
-    <!-- Wide card with share menu button -->
+    <!-- ==============================================================PAGE PRELOADER======================================================== -->
+    <div class="loader">
+        <div class="inner"></div>
+    </div>
     <style>
-        .demo-card-wide.mdl-card {
-            width: 512px;
+        .loader{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
         }
-
-        .demo-card-wide>.mdl-card__title {
-            color: #fff;
-            height: 176px;
-            background: url('../assets/demos/welcome_card.jpg') center / cover;
-        }
-
-        .demo-card-wide>.mdl-card__menu {
-            color: #fff;
+        .loader .inner{
+            width: 100%;
+            height: 100%;
+            background: url(./loader.gif) center center no-repeat;
         }
     </style>
+    <script>
+        $(window).on("load", function () {
+            $(".loader .inner").fadeOut(750, function () {
+                $(".loader").fadeOut(1000);
+            });
+        })
+    </script>
+    <!-- ==============================================================PAGE PRELOADER======================================================== -->
 
-    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">Welcome</h2>
-        </div>
-        <div class="mdl-card__supporting-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Mauris sagittis pellentesque lacus eleifend lacinia...
-        </div>
-        <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Get Started
-            </a>
-        </div>
-        <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                <i class="material-icons">share</i>
-            </button>
-        </div>
+
+    <div id="app">
+        <div data-includeHTML="./header/header_menu.html"></div>
+        <script>
+            $(document).ready(function () {
+                $("div[data-includeHTML]").each(function () {
+                    $(this).load($(this).attr("data-includeHTML"));
+                });
+            });
+        </script>
+        <!-- Slide over camera====================================================================================================       -->
+
+        <main class="mdl-layout__content mat-typography">
+            <div id="create-post">
+                <video id="player" autoplay></video>
+                <canvas id="canvasOutput" width="320px" height="240px"></canvas>
+
+                <button class="mdl-button mdl-js-button mdl-button--fab" id="close-create-post-modal-btn" type="button">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+
+            <img src="/src/images/mountain-croped.jpg" srcset="/src/images/mountain-croped.jpg 1200w,
+          /src/images/mountain-croped.jpg 900w,
+          /src/images/mountain-croped.jpg 480w"
+                alt="Explore the City" class="main-image" style="width: 100vw;margin-top: 56px;">
+
+            <div class="page-content">
+                <!-- <h5 class="text-center mdl-color-text--primary">Add contact for <span id="displayName"></span></h5> -->
+
+
+
+                <div class="mdl-grid">
+                    <!-- ===============Start Image Card ====================== -->
+
+                    <!-- ==================End Image Card ======================== -->
+
+                    <!-- START OF THE CARD ===================                         -->
+                    <!-- Wide card with share menu button -->
+                    <style>
+                        .demo-card-wide.mdl-card {
+                        width: 512px;
+                        }
+                        .demo-card-wide > .mdl-card__title {
+                        color: #fff;
+                        height: 176px;
+                        /* background: url('../assets/demos/welcome_card.jpg') center / cover; */
+                        }
+                        .demo-card-wide > .mdl-card__menu {
+                        color: #fff;
+                        }
+                        .center{
+                            text-align: right;
+                            vertical-align: top;
+                        }
+                        </style>
+
+                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+
+                        <div class="mdl-card__supporting-text">
+                            <img src="./profile_filler.jpg" alt="" style="width: 25%; background-color: #5E9BD1;">
+                            First Name Last Name
+                        </div>
+                        <hr>
+                        <div class="mdl-card__supporting-text">
+                            <i class="material-icons">star</i>Is Care taker: <span>Hide if not</span>
+                        </div>
+                        <!-- <hr> -->
+                        <div class="mdl-card__supporting-text">
+                            Relation: <span>Put the relation here</span>
+                        </div>
+                        <!-- <hr> -->
+                        <div class="mdl-card__supporting-text">
+                            Reminder Phrase: <span>Put the reminder phrase here</span>
+
+                        </div>
+
+                        <div class="mdl-card__menu">
+
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                Delete Contact(make red)
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- END OF THE CARD =========================== -->
+
+
+
+                    <!-- <div class="mdl-layout-spacer"></div> -->
+                </div>
+
+            </div>
+            <!-- ==================================*****************  FLOATING BUTTON *********************============================================= -->
+            <div class="floating-button" style="position: absolute;left: 75vw;bottom: 10vh;z-index: 5;" onclick="javascript:location.href='/camera/index.html'">
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="share-image-button">
+                    <i class="material-icons">camera_alt</i>
+                </button>
+            </div>
+            <div id="confirmation-toast" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button type="button" class="mdl-snackbar__action"></button>
+            </div>
+        </main>
+
+        <!--End Slide over camera====================================================================================================       -->
+
+
+    </div>
     </div>
 
+    <script src="./fireBase.js"></script>
+    <script src="./index.js"></script>
 
-
+    <script async src="/src/js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+    <script defer src="/src/js/material.min.js"></script>
+    <script src="/src/js/promise.js"></script>
+    <script src="/src/js/fetch.js"></script>
+    <script src="/src/js/idb.js"></script>
+    <script src="/src/js/utility.js"></script>
+    <script src="/src/js/app.js"></script>
+    <script src="/src/js/feed.js"></script>
 </body>
 
 </html>
