@@ -27,51 +27,10 @@
             left: 0px;
             z-index: 1000;
         }
-
         .loader .inner{
             width: 100%;
             height: 100%;
             background: url(./loader.gif) center center no-repeat;
-        }
-        .container {
-            border-radius: 5px;
-            background-color: white;
-            padding: 10px;
-        }
-
-        /* Create two columns that float next to eachother */
-        .column {
-            float: right;
-            width: 45%;
-            margin: 6px;
-            padding: 20px;
-            align-content: center;
-            border-radius: 5px;
-            background-color: white;
-        }
-
-        .left {
-            float: left;
-            width: 45%;
-            margin-top: 6px;
-            padding: 20px;
-        }
-
-        /* Clear floats after the columns */
-        .row:after {
-            content: "";
-            width: 100%;
-            display: table;
-            clear: right;
-            resize: vertical;
-        }
-
-        @media screen and (max-width: 600px) {
-            .column, input[type=submit] {
-                width: 90%;
-                margin: 5px;
-                background-color: lightgrey;
-            }
         }
     </style>
     <script>
@@ -84,13 +43,13 @@
     <!-- ==============================================================END PAGE PRELOADER======================================================== -->
     <div id="app">
 
-        <!-- ==================================*****************  FLOATING BUTTON *********************=============================================>
-        < div class="floating-button" style="position: absolute;left: 75vw;bottom: 10vh;z-index: 5;" onclick="javascript:location.href='/camera/index.html'">
-        <div class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="share-image-button">
-            <i class="material-icons">camera_alt</i>
+        <!-- ==================================*****************  FLOATING BUTTON *********************============================================= -->
+        <div class="floating-button" style="position: absolute;left: 75vw;bottom: 10vh;z-index: 5;" onclick="javascript:location.href='/camera/index.erb'">
+            <div class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="share-image-button">
+                <i class="material-icons">camera_alt</i>
+            </div>
         </div>
-    </div>
-    < ==================================***************** END FLOATING BUTTON *********************============================================= -->
+        <!-- ==================================***************** END FLOATING BUTTON *********************============================================= -->
 
         <div data-includeHTML="./header/header_menu.html"></div>
         <script>
@@ -100,95 +59,88 @@
                 });
             });
         </script>
-        <div class="container">
-            <div class=" row">
-                <div class="column">
 
-                    <img src="/src/images/mountain-croped.jpg" style="width:100%">
-                </div>
+        <main class="mdl-layout__content mat-typography">
 
-                <div class="column">
-                    <div class="card card-3">
-                        <form id="add-friend-form">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" name="first_name">
-                                <label class="mdl-textfield__label" for="sample1">First Name</label>
-                            </div>
+            <img src="/src/images/mountain-croped.jpg" srcset="/src/images/mountain-croped.jpg 1200w,
+          /src/images/mountain-croped.jpg 900w,
+          /src/images/mountain-croped.jpg 480w"
+                alt="Explore the City" class="main-image" style="width: 100vw;margin-top: 56px;">
 
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" name="last_name">
-                                <label class="mdl-textfield__label" for="sample2">Last Name</label>
-                            </div>
+            <div class="page-content">
+                <div class="card card-3">
+                    <form id="add-friend-form">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" name="first_name">
+                            <label class="mdl-textfield__label" for="sample1">First Name</label>
+                        </div>
 
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" name="relation_to_client">
-                                <label class="mdl-textfield__label" for="sample3">Relation to Client</label>
-                            </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" name="last_name">
+                            <label class="mdl-textfield__label" for="sample2">Last Name</label>
+                        </div>
 
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" name="reminder_phrase">
-                                <label class="mdl-textfield__label" for="sample4">Reminder Phrase</label>
-                            </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" name="relation_to_client">
+                            <label class="mdl-textfield__label" for="sample3">Relation to Client</label>
+                        </div>
 
-                            <!-- <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <style>
-                    .inputfile {
-                            width: 0.1px;
-                            height: 0.1px;
-                            opacity: 0;
-                            overflow: hidden;
-                            position: absolute;
-                            z-index: -1;
-                        }
-                        .inputfile + label {
-                            font-size: 1.25em;
-                            font-weight: 700;
-                            color: white;
-                            background-color: #04a9f4;
-                            display: inline-block;
-                        }
-                        .inputfile:focus + label,
-                        .inputfile + label:hover {
-                            background-color: #ff9800;
-                        }
-                    </style>
-                <input class="mdl-button mdl-js-button mdl-button--raised inputfile" type="file" name="file"
-                    id="file" accept="image/*" />
-                <label class="mdl-button mdl-js-button mdl-button--raised " for="file">Choose a profile
-                    pitcure</label>
-            </div> -->
-                            <button id="add-friend-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                                Submit
-                            </button>
-                        </form>
-                    </div>
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="share-image-button">
-                        <i class="material-icons">camera_alt</i>
-                    </button>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" name="reminder_phrase">
+                            <label class="mdl-textfield__label" for="sample4">Reminder Phrase</label>
+                        </div>
+
+                        <!-- <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <style>
+                                .inputfile {
+                                        width: 0.1px;
+                                        height: 0.1px;
+                                        opacity: 0;
+                                        overflow: hidden;
+                                        position: absolute;
+                                        z-index: -1;
+                                    }    
+                                    .inputfile + label {
+                                        font-size: 1.25em;
+                                        font-weight: 700;
+                                        color: white;
+                                        background-color: #04a9f4;
+                                        display: inline-block;
+                                    }
+                                    .inputfile:focus + label,
+                                    .inputfile + label:hover {
+                                        background-color: #ff9800;
+                                    }
+                                </style>
+                            <input class="mdl-button mdl-js-button mdl-button--raised inputfile" type="file" name="file"
+                                id="file" accept="image/*" />
+                            <label class="mdl-button mdl-js-button mdl-button--raised " for="file">Choose a profile
+                                pitcure</label>
+                        </div> -->
+                        <button id="add-friend-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                            Submit
+                        </button>
+                    </form>
                 </div>
                 <style>
                     .card {
-                        background: #fff;
-                        border-radius: 2px;
-                        display: inline-block;
-                        height: 305px;
-                        margin: 1rem;
-                        position: relative;
-                        width: 300px;
-                    }
-
-                    .card-3 {
-                        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-                    }
-                    .mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent{
-                        align-content: center;
-                    }
-                </style>
+                background: #fff;
+                border-radius: 2px;
+                display: inline-block;
+                height: 300px;
+                margin: 1rem;
+                position: relative;
+                width: 300px;
+                }
+            .card-3 {
+                box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+              }
+        </style>
 
                 <!-- ===========================================START SNACK BAR ============================================ -->
                 <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
                     <div class="mdl-snackbar__text"></div>
-                    <button class="mdl-snackbar__action" type="button" ></button>
+                    <button class="mdl-snackbar__action" type="button"></button>
                 </div>
                 <script>
                     (function () {
@@ -213,10 +165,10 @@
                     }());
                 </script>
                 <!-- ===========================================END SNACK BAR ============================================ -->
-                
             </div>
+        </main>
     </div>
-
+    </div>
 
     <script src="./fireBase.js"></script>
     <script src="./index.js"></script>

@@ -12,13 +12,13 @@
 </head>
 
 <body>
-    <!-- ==============================================================PAGE PRELOADER======================================================== -->
-    <div class="loader">
-        <div class="inner"><h1></h1></div>
-    </div>
-    <style>
 
-        .loader {
+  <!-- ==============================================================PAGE PRELOADER======================================================== -->
+  <div class="loader">
+    <div class="inner"></div>
+  </div>
+  <style>
+    .loader{
             width: 100%;
             height: 100%;
             background-color: #fff;
@@ -27,120 +27,95 @@
             left: 0px;
             z-index: 1000;
         }
-
-            .loader .inner {
-                width: 100%;
-                height: 100%;
-                background: url(./loader.gif) center center no-repeat;
-            }
-
-        .container {
-            border-radius: 5px;
-            background-color: white;
-            padding: 10px;
-            
-        }
-
-        /* Create two columns that float next to eachother */
-        .column {
-            float: right;
-            width: 45%;
-            margin: 6px;
-            padding: 20px;
-            align-content: center;
-            border-radius: 5px;
-            background-color: white;
-        }
-
-        .left {
-            float: left;
-            width: 45%;
-            margin-top: 6px;
-            padding: 20px;
-            
-        }
-
-        /* Clear floats after the columns */
-        .row:after {
-            content: "";
+        .loader .inner{
             width: 100%;
-            display: table;
-            clear: right;
-            resize: vertical;
-        }
-        @media screen and (max-width: 600px) {
-            .column, input[type=submit] {
-                width: 90%;
-                margin: 5px;
-            }
+            height: 100%;
+            background: url(./loader.gif) center center no-repeat;
         }
     </style>
+  <script>
+    $(window).on("load", function () {
+      $(".loader .inner").fadeOut(750, function () {
+        $(".loader").fadeOut(2000);
+      });
+    })
+  </script>
+  <!-- ==============================================================END PAGE PRELOADER======================================================== -->
+
+  <div id="app">
+
+    <div data-includeHTML="./header/header_menu.html"></div>
     <script>
-        $(window).on("load", function () {
-            $(".loader .inner").fadeOut(750, function () {
-                $(".loader").fadeOut(2000);
-            });
-        })
+      $(document).ready(function () {
+        $("div[data-includeHTML]").each(function () {
+          $(this).load($(this).attr("data-includeHTML"));
+        });
+      });
     </script>
-    <!-- ==============================================================END PAGE PRELOADER======================================================== -->
-    <div class="container">
-        <div id="app">
-            <div data-includeHTML="./header/header_menu.html"></div>
-            <script>
-                $(document).ready(function () {
-                    $("div[data-includeHTML]").each(function () {
-                        $(this).load($(this).attr("data-includeHTML"));
-                    });
-                });
-            </script>
 
-            <div class="text-center">
-                <h5 class="mdl-color-text--primary" id="displayName"></h5>
-            </div>
-            <div class="row">
-                <div class="column">
-                    <img src="/src/images/mountain-croped.jpg" style="width:100%">
-                </div>
+    <main class="mdl-layout__content mat-typography">
 
-                <div class="column">
+      <img src="/src/images/mountain-croped.jpg" srcset="/src/images/mountain-croped.jpg 1200w,
+          /src/images/mountain-croped.jpg 900w,
+          /src/images/mountain-croped.jpg 480w"
+        alt="Explore the City" class="main-image" style="width: 100vw;margin-top: 56px;">
 
-                    <!--onclick="location.href='./index.html'"  -->
-                    <ul id="friend-list" class="demo-list-icon mdl-list"></ul>
-                    <div class="column" style="position: inherit;center: 75vw;z-index: 5" onclick="javascript:location.href='/camera/index.html'">
-                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="share-image-button">
-                            <i class="material-icons">camera_alt</i>
-                        </button>
-                    </div>
-                </div>
+      <div class="page-content">
 
 
-                
-            </div>
+        <div class="text-center">
+          <h5 class="mdl-color-text--primary" id="displayName"></h5>
         </div>
-        <!--End Slide over camera====================================================================================================       -->
-    </div>
 
-    <!-- ==================================*****************  FLOATING BUTTON *********************============================================= -->
-    
 
-    <script src="./fireBase.js"></script>
-    <script src="./index.js"></script>
+        <!--onclick="location.href='./index.erb'"  -->
+        <ul id="friend-list" class="demo-list-icon mdl-list"></ul>
 
-    <script defer src="/src/js/material.min.js"></script>
-    <script src="/src/js/promise.js"></script>
-    <script src="/src/js/fetch.js"></script>
-    <script src="/src/js/idb.js"></script>
-    <script src="/src/js/utility.js"></script>
-    <script src="/src/js/app.js"></script>
-    <script>
 
-        $(window).on("load", function {
-            $(".loader .inner").fadeOut(500, function () {
-                $(".loader").fadeOut(750);
-            });
-        })
+      </div>
 
-    </script>
+
+      <div id="confirmation-toast" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button type="button" class="mdl-snackbar__action"></button>
+      </div>
+    </main>
+
+    <!--End Slide over camera====================================================================================================       -->
+
+  </div>
+  </div>
+
+
+
+  <!-- ==================================*****************  FLOATING BUTTON *********************============================================= -->
+  <div class="floating-button" style="position: absolute;left: 75vw;bottom: 10vh;z-index: 5;" onclick="javascript:location.href='/camera/index.erb'">
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" id="share-image-button">
+      <i class="material-icons">camera_alt</i>
+    </button>
+  </div>
+
+
+  <script src="./fireBase.js"></script>
+  <script src="./index.js"></script>
+
+
+  <script defer src="/src/js/material.min.js"></script>
+  <script src="/src/js/promise.js"></script>
+  <script src="/src/js/fetch.js"></script>
+  <script src="/src/js/idb.js"></script>
+  <script src="/src/js/utility.js"></script>
+  <script src="/src/js/app.js"></script>
+
+  <script>
+
+    $(window).on("load", function {
+      $(".loader .inner").fadeOut(500, function () {
+        $(".loader").fadeOut(750);
+      });
+    })
+
+  </script>
 </body>
 
 </html>
