@@ -21,13 +21,13 @@ var mainApp = {};
 
       document.querySelector(
         "#displayName"
-      ).innerHTML = `Contacts for ${displayName} ${uid}`;
+      ).innerHTML = `Contacts for ${displayName}`;
 
       // ==================================================NEW======================================================
     } else {
       //this will redirect to the login page if the user is not logged in
       uid = null; //uid is null if not logged in
-      window.location.replace("login.html");
+      window.location.replace("login.erb");
     }
   });
 
