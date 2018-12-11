@@ -1,0 +1,4 @@
+#codeEditor, #videoInput{
+    display:none;
+    /* ******  ***** *** display:inline; This will show the code and original video*/
+}
